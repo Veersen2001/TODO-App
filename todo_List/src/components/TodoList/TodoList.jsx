@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Todo from '../Todo/Todo';
 
-function TodoList({list}) {
+function TodoList({list,updateList}) {
    
   return (
     <div> 
@@ -11,7 +11,16 @@ function TodoList({list}) {
       id={todo.id} 
       isFinished={todo.finished} 
       todoData = {todo.todoData} 
-     
+      changeFinished={(isFinished) =>{
+        const updatedList = list.map(t =>{
+          if(t.id == todo.id)
+          {
+            todo.finished = isFinished;
+          }
+          return t;
+        });
+        updateList(updatedList);
+      }}
      /> )}
     </div>
   )
