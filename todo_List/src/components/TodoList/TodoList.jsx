@@ -1,7 +1,33 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Todo from '../Todo/Todo';
+import todoContext from '../../context/todoContext';
 
-function TodoList({list,updateList}) {
+function TodoList() {
+  const { list, setList } = useContext(todoContext);
+
+
+  function onFinished(todo,isFinished)
+  {
+    const updatedList = list.map(t => {
+      if (t.id == todo.id) {
+        todo.finished = isFinished;
+      }
+      return t;
+    });
+    setList(updatedList);
+  
+  }
+
+
+   function onDelete(todo)
+   {
+     const updatedList = list.filter(t => t.id != todo.id)
+     setList(updatedList);
+   }
+
+   
+
+
    
   return (
     <div> 
@@ -11,16 +37,21 @@ function TodoList({list,updateList}) {
       id={todo.id} 
       isFinished={todo.finished} 
       todoData = {todo.todoData} 
-      changeFinished={(isFinished) =>{
-        const updatedList = list.map(t =>{
-          if(t.id == todo.id)
-          {
-            todo.finished = isFinished;
+      changeFinished={(isFinished)=>onFinished(todo,isFinished)}
+      onDelete = {()=>onDelete(todo)}
+
+      onEdit= {(todoText)=>{
+        const updatedList = list.map(t => {
+          if (t.id == todo.id) {
+            todo.todoData = todoText;
           }
           return t;
         });
-        updateList(updatedList);
+        setList(updatedList);
+
+
       }}
+
      /> )}
     </div>
   )
