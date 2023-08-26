@@ -24,7 +24,17 @@ function TodoList() {
      const updatedList = list.filter(t => t.id != todo.id)
      setList(updatedList);
    }
-
+    
+   function onEdit(todo,todoText)
+   {
+     const updatedList = list.map(t => {
+       if (t.id == todo.id) {
+         todo.todoData = todoText;
+       }
+       return t;
+     });
+     setList(updatedList);
+   }
    
 
 
@@ -40,17 +50,7 @@ function TodoList() {
       changeFinished={(isFinished)=>onFinished(todo,isFinished)}
       onDelete = {()=>onDelete(todo)}
 
-      onEdit= {(todoText)=>{
-        const updatedList = list.map(t => {
-          if (t.id == todo.id) {
-            todo.todoData = todoText;
-          }
-          return t;
-        });
-        setList(updatedList);
-
-
-      }}
+      onEdit= {(todoText)=>onEdit(todo,todoText)}
 
      /> )}
     </div>
